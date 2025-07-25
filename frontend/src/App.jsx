@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import AdminPanel from './components/AdminPanel';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
@@ -14,6 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/admin"
           element={
