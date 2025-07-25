@@ -1,4 +1,3 @@
-// backend/controllers/productoController.js
 const { Producto } = require('../models');
 
 const getProductos = async (req, res) => {
@@ -8,20 +7,34 @@ const getProductos = async (req, res) => {
 
 const createProducto = async (req, res) => {
   const { nombre, descripcion, precio, stock } = req.body;
-  if (!nombre || !descripcion || !precio || !stock) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
+
+  if (!nombre || !descripcion) {
+    return res.status(400).json({ error: 'Nombre y descripción son obligatorios' });
   }
 
-  const producto = await Producto.create({
-    nombre,
-    descripcion,
-    precio,
-    stock,
-    UserId: req.user.id,
-  });
+  const precioNum = Number(precio);
+  const stockNum = Number(stock);
 
-  res.status(201).json(producto);
+  if (isNaN(precioNum) || isNaN(stockNum)) {
+    return res.status(400).json({ error: 'Precio y stock deben ser números válidos' });
+  }
+
+  try {
+    const producto = await Producto.create({
+      nombre,
+      descripcion,
+      precio: precioNum,
+      stock: stockNum,
+      UserId: req.user.id,
+    });
+
+    res.status(201).json(producto);
+  } catch (error) {
+    console.error('Error al crear producto:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
+
 
 const updateProducto = async (req, res) => {
   const { id } = req.params;

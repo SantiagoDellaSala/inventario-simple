@@ -31,7 +31,6 @@ export default function ProductoForm({ producto, onClose }) {
     e.preventDefault();
     setError('');
 
-    // Validaciones básicas
     if (!form.nombre.trim()) {
       setError('El nombre es obligatorio');
       return;
@@ -51,10 +50,10 @@ export default function ProductoForm({ producto, onClose }) {
 
     try {
       if (producto) {
-        // Editar producto
+
         await axios.put(`http://localhost:3000/api/productos/${producto.id}`, form);
       } else {
-        // Crear producto
+
         await axios.post('http://localhost:3000/api/productos', form);
       }
       onClose();

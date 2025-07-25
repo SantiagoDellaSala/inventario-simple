@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductoForm from './ProductoForm'; // Lo crearemos en el paso 11
-import './AdminPanel.css'; // (opcional para estilos)
+import ProductoForm from './ProductoForm';
 
 export default function AdminPanel() {
   const [productos, setProductos] = useState([]);
